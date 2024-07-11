@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -21,5 +21,19 @@ export class AppController {
       endDate,
     );
     return asteroids;
+  }
+
+  @Post('favorites')
+  async addFavoriteAsteroid(
+    @Body('id') id: string,
+    @Body('name') name: string,
+    @Body('url') url: string,
+  ) {
+    return this.appService.serviceAddFavoriteAsteroid(id, name, url);
+  }
+
+  @Get('favorites')
+  async fetchFavoriteAsteroids() {
+    return this.appService.serviceFetchFavoriteAsteroids();
   }
 }
